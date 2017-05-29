@@ -1,0 +1,22 @@
+Helper Links
+
+ 1- Primero debes cambiar la configuration de los puertos de sqlserver
+    https://stackoverflow.com/questions/29316729/cant-connect-to-sql-server-database-using-jdbc
+   
+    Go to your SQL Server configuration manager -> SQL server network configuration -> protocols for SQLEXPRESS -> TCP/IP (double click on it for properties).
+
+    On protocol page set enabled to Yes. On IP Addresses page, scroll to bottom. TCP Dynamic Ports: 54629 TCP Port: 1433 Apply and ok.
+
+    Make a connection with: Host: localhost Port: 1433 Your credentials Instance field = blank and use integrated security.
+
+
+https://stackoverflow.com/questions/2451892/how-do-i-connect-to-a-sql-server-2008-database-using-jdbc
+
+2- Debes  Agregar el sqljdbc_authd DLL en la carpeta system 32. 
+IS MISSING FOR INTEGRATEDSECURITY
+
+https://stackoverflow.com/questions/17277001/dll-missing-in-jdbc
+
+Sample string connection
+
+"jdbc:sqlserver://localhost:1433;databaseName=moocy;integratedSecurity=true";

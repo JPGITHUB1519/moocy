@@ -1,0 +1,3 @@
+https://stackoverflow.com/questions/308856/visual-inheritance-in-java
+
+Java do not support inherit form

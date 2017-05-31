@@ -19,9 +19,15 @@ public class FrmBase extends javax.swing.JFrame {
         this.mensaje();
     }
     
-    public void mensaje() {
-        
-    };
+    private String accion;
+    
+    // virtual methods to override
+    public void mensaje() {};
+    public void habilitar() {};
+    public void guardar() {};
+    public void cancelar() {};
+    public void eliminar() {};
+    public void buscar() {};
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -34,9 +40,9 @@ public class FrmBase extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        btnsalir1 = new javax.swing.JButton();
+        btncancelar = new javax.swing.JButton();
         btnnuevo = new javax.swing.JButton();
-        btneliminar1 = new javax.swing.JButton();
+        btnguardar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtbuscar = new javax.swing.JTextField();
@@ -55,14 +61,29 @@ public class FrmBase extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 204, 102));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Registro de <cambiar>"));
 
-        btnsalir1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/cancel.png"))); // NOI18N
-        btnsalir1.setText("Cancelar");
+        btncancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/cancel.png"))); // NOI18N
+        btncancelar.setText("Cancelar");
+        btncancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btncancelarActionPerformed(evt);
+            }
+        });
 
         btnnuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/cancel.png"))); // NOI18N
         btnnuevo.setText("Nuevo");
+        btnnuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnnuevoActionPerformed(evt);
+            }
+        });
 
-        btneliminar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/save.png"))); // NOI18N
-        btneliminar1.setText("Guardar");
+        btnguardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/save.png"))); // NOI18N
+        btnguardar.setText("Guardar");
+        btnguardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnguardarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -72,9 +93,9 @@ public class FrmBase extends javax.swing.JFrame {
                 .addGap(136, 136, 136)
                 .addComponent(btnnuevo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btneliminar1)
+                .addComponent(btnguardar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnsalir1)
+                .addComponent(btncancelar)
                 .addContainerGap(95, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -83,8 +104,8 @@ public class FrmBase extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnnuevo)
-                    .addComponent(btneliminar1)
-                    .addComponent(btnsalir1))
+                    .addComponent(btnguardar)
+                    .addComponent(btncancelar))
                 .addGap(25, 25, 25))
         );
 
@@ -96,12 +117,27 @@ public class FrmBase extends javax.swing.JFrame {
 
         btnbuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/search.png"))); // NOI18N
         btnbuscar.setText("Buscar");
+        btnbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnbuscarActionPerformed(evt);
+            }
+        });
 
         btneliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/delete.png"))); // NOI18N
         btneliminar.setText("Eliminar");
+        btneliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btneliminarActionPerformed(evt);
+            }
+        });
 
         btnsalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/home.png"))); // NOI18N
         btnsalir.setText("Salir");
+        btnsalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsalirActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -184,6 +220,38 @@ public class FrmBase extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnnuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnnuevoActionPerformed
+        // TODO add your handling code here:
+        this.habilitar();
+        btnguardar.setText("Guardar");
+        this.accion = "guardar";
+    }//GEN-LAST:event_btnnuevoActionPerformed
+
+    private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
+        // TODO add your handling code here:
+        this.guardar();
+    }//GEN-LAST:event_btnguardarActionPerformed
+
+    private void btncancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelarActionPerformed
+        // TODO add your handling code here:
+        this.cancelar();
+    }//GEN-LAST:event_btncancelarActionPerformed
+
+    private void btnsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalirActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnsalirActionPerformed
+
+    private void btneliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneliminarActionPerformed
+        // TODO add your handling code here:
+        this.eliminar();
+    }//GEN-LAST:event_btneliminarActionPerformed
+
+    private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
+        // TODO add your handling code here:
+        this.buscar();
+    }//GEN-LAST:event_btnbuscarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -221,11 +289,11 @@ public class FrmBase extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnbuscar;
+    private javax.swing.JButton btncancelar;
     private javax.swing.JButton btneliminar;
-    private javax.swing.JButton btneliminar1;
+    private javax.swing.JButton btnguardar;
     private javax.swing.JButton btnnuevo;
     private javax.swing.JButton btnsalir;
-    private javax.swing.JButton btnsalir1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

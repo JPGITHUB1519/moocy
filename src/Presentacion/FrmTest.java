@@ -20,8 +20,10 @@ public class FrmTest extends FrmBase {
         initComponents();
     }
     
+    @Override
     public void mensaje() {
-        JOptionPane.showMessageDialog(null, "Hey");
+        //  JOptionPane.showMessageDialog(null, "Hey");
+        System.out.print("Hey");
     }
 
     /**

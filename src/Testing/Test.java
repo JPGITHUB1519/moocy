@@ -17,11 +17,12 @@ public class Test {
         MTest test_model = new MTest();
         DTest test_logic = new DTest();
         
-        test_model.setDescripcion("Test2");
-        test_model.setTipo("kind");
-        test_model.setStatus(true);
-        test_logic.insertar(test_model);
-        System.out.println("Hey");
+        test_model.setIdtest(5);
+        test_model.setDescripcion("changed CHANGED");
+        test_model.setTipo("kind change CHANGED");
+        test_model.setStatus(false);
+        
+        System.out.println(test_logic.delete(test_model));
         
         
     }

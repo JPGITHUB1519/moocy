@@ -6,7 +6,9 @@
 package Presentacion;
 
 import Data.DUsuario;
+import Utils.Session;
 import Modelos.MUsuario;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 /**
@@ -126,6 +128,22 @@ public class PLogin extends javax.swing.JFrame {
         usuario.setPassword(this.txtpassword.getText());
         if(usuario_data.login(usuario))
         {
+            ResultSet usuario_rs = usuario_data.getUsuarioByLogin(this.txtlogin.getText());
+            try {
+                if(usuario_rs.next()) 
+                {
+                    System.out.println(usuario_rs.getInt("id"));
+                    Session.user_id = usuario_rs.getInt("id");
+                    Session.username = usuario_rs.getString("nombre");
+                    Session.login = usuario_rs.getString("login");
+                    Session.user_type = usuario_rs.getString("tipo_usuario");
+                    
+                }
+            } catch(Exception e) {
+                System.out.println(e.getMessage());
+            }
+            
+            
             JOptionPane.showMessageDialog(this, "Bienvenido " + this.txtlogin.getText(), "Moocy", JOptionPane.INFORMATION_MESSAGE);
             PPrincipal doform = new PPrincipal();
             doform.setVisible(true);

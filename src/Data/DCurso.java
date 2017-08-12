@@ -43,6 +43,24 @@ public class DCurso {
         }        
     }
     
+    public int addCourseToUsuario(int usuario_id, int curso_id) 
+    {
+        sSQL = "EXEC spAddCourseToUsuario ?, ?";
+        try {
+            PreparedStatement pst = cn.prepareStatement(sSQL);
+            pst.setInt(1, usuario_id);
+            pst.setInt(2, curso_id);
+            return pst.executeUpdate();
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+            return 0;
+      
+        
+        }  
+    }
+    
+    
+    
     public int update(MCurso curso) {
         //(nombre, slogan, descripcion, skill_level, fecha_lanzamiento, is_active )
         sSQL = "EXEC spUpdateCurso ?, ?, ?, ?, ?, ?, ?";
@@ -75,6 +93,22 @@ public class DCurso {
             JOptionPane.showMessageDialog(null, e);
             return 0;
         }
+    }
+    
+    public int DeleteCourseToUsuario(int usuario_id, int curso_id) 
+    {
+        sSQL = "EXEC spDeleteCourseToUsuario ?, ?";
+        try {
+            PreparedStatement pst = cn.prepareStatement(sSQL);
+            pst.setInt(1, usuario_id);
+            pst.setInt(2, curso_id);
+            return pst.executeUpdate();
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+            return 0;
+      
+        
+        }  
     }
     
     public DefaultTableModel show(String buscar) {
@@ -113,6 +147,79 @@ public class DCurso {
             ResultSet rs =  st.executeQuery(sSQL);
           
             return rs;
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+            return null;
+        }     
+    }
+    
+    public ResultSet getCursosByUsuario(int usuario_id)
+    {
+        sSQL = "EXEC getCoursesByUsuario ?";
+        try {
+            PreparedStatement pst = cn.prepareStatement(sSQL);
+            pst.setInt(1, usuario_id);
+            ResultSet rs =  pst.executeQuery();
+          
+            return rs;
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+            return null;
+        }     
+    }
+    
+    
+    public ResultSet getRemainingCoursesByUsuario(int usuario_id)
+    {
+        sSQL = "EXEC getRemainingCoursesByUsuario ?";
+        try {
+            PreparedStatement pst = cn.prepareStatement(sSQL);
+            pst.setInt(1, usuario_id);
+            ResultSet rs =  pst.executeQuery();
+          
+            return rs;
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+            return null;
+        } 
+    }
+    
+    public DefaultTableModel show_get_cursos_by_usuario(int usuario_id) {
+        DefaultTableModel modelo;
+        String [] titulos = { "ID", "Nombre"};
+        String [] registro = new String[2];
+        totalregistros = 0;
+        modelo = new DefaultTableModel(null, titulos);
+        ResultSet rs = this.getCursosByUsuario(usuario_id);
+        try {
+            while(rs.next()) {
+                registro[0] = rs.getString("id");
+                registro[1] = rs.getString("nombre");
+                totalregistros++;
+                modelo.addRow(registro);
+            }
+            return modelo;
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+            return null;
+        }     
+    }
+    
+    public DefaultTableModel show_remaining_cursos_by_usuario(int usuario_id) {
+        DefaultTableModel modelo;
+        String [] titulos = { "ID", "Nombre"};
+        String [] registro = new String[2];
+        totalregistros = 0;
+        modelo = new DefaultTableModel(null, titulos);
+        ResultSet rs = this.getRemainingCoursesByUsuario(usuario_id);
+        try {
+            while(rs.next()) {
+                registro[0] = rs.getString("id");
+                registro[1] = rs.getString("nombre");
+                totalregistros++;
+                modelo.addRow(registro);
+            }
+            return modelo;
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(null, e);
             return null;

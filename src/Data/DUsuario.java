@@ -41,4 +41,34 @@ public class DUsuario {
             return false;   
         }      
     }
+    
+    public ResultSet getUsuarioById(int id)
+    {
+        sSQL = "EXEC getUsuarioById ?";
+        try {
+            PreparedStatement pst = cn.prepareStatement(sSQL);
+            pst.setInt(1, id);
+            ResultSet rs =  pst.executeQuery();
+          
+            return rs;
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+            return null;
+        }     
+    }
+    
+    public ResultSet getUsuarioByLogin(String login)
+    {
+        sSQL = "EXEC spgetUsuarioByLogin ?";
+        try {
+            PreparedStatement pst = cn.prepareStatement(sSQL);
+            pst.setString(1, login);
+            ResultSet rs =  pst.executeQuery();
+          
+            return rs;
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+            return null;
+        }     
+    }
 }

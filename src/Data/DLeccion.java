@@ -79,17 +79,26 @@ public class DLeccion {
     
      public DefaultTableModel show_only_name(int curso) {
         DLeccion leccion_data = new DLeccion();
-        DefaultTableModel modelo;
-        String [] titulos = { "ID", "Nombre"};
-        String [] registro = new String[2];
+        String [] titulos = { "ID", "Numero de Leccion", "Nombre"};
+        String [] registro = new String[3];
         totalregistros = 0;
-        modelo = new DefaultTableModel(null, titulos);
+        DefaultTableModel modelo = new DefaultTableModel(null, titulos) {
+            // readonly cells
+            @Override
+            public boolean isCellEditable(int row, int column) {
+               //all cells false
+               return false;
+            }
+        };
         try {
             ResultSet rs =  leccion_data.getLecciones(curso);
+            int cont = 1;
             while(rs.next()) {
                 registro[0] = rs.getString("id");
-                registro[1] = rs.getString("nombre");
+                registro[1] =  "Leccion # " + Integer.toString(cont);
+                registro[2] = rs.getString("nombre");
                 modelo.addRow(registro);
+                cont ++;
             }
             return modelo;
         } catch (Exception e) {

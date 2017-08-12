@@ -5,6 +5,7 @@
  */
 package Presentacion;
 
+import Data.DConcepto;
 import Data.DLeccion;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -12,12 +13,14 @@ import java.sql.SQLException;
 import java.util.Vector;
 import javax.swing.DefaultListModel;
 import javax.swing.JTable;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Tester
  */
+
 public class PLecciones extends javax.swing.JFrame {
     
     private int curso_id;
@@ -26,54 +29,26 @@ public class PLecciones extends javax.swing.JFrame {
      */
     public PLecciones() {
         initComponents();
-        DefaultListModel test = new DefaultListModel();
-
-        for(int i = 0; i < 5 ; ++i){
-           test.addElement(i);
-        }
-        lessons_list.setModel(test);
-        
-        //DLeccion leccion_data = new DLeccion();
-        //this.jTable1.setModel(leccion_data.show(3));
     }
     
     public PLecciones(int curso, String nombre_curso) {
         initComponents();
         this.curso_id = curso;
-        this.lblcurso_title.setText(nombre_curso);
-        System.out.println(curso);
-        // modelo para lista de lecciones
-        DefaultListModel test = new DefaultListModel();
-        
-        
+        this.lblcurso_title.setText(nombre_curso);   
         DLeccion leccion = new DLeccion();
         ResultSet rs = leccion.getLecciones(curso);
-        int id;
-        String nombre;
-        int lesson_number;
-
-        try
-        {
-          while(rs.next())
-            {
-               id = Integer.parseInt(rs.getString(1));
-               nombre = rs.getString(3);
-               lesson_number = Integer.parseInt(rs.getString(5));
-               test.addElement("Leccion # " + lesson_number + " - " +  nombre);
-            } 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
         
-        lessons_list.setModel(test);
+        // Fill Leccion Table
+        this.tabla_lecciones.setModel(leccion.show_only_name(curso));
         
-        // table
-        this.jTable1.setModel(leccion.show_only_name(curso));
-        
-        this.hideColumnFromTable(jTable1, 0);
+        this.hideColumnFromTable(tabla_lecciones, 0);
         
     }
     
+    private void getValueFromTable(JTable table, int row_index, int col_index)
+    {
+        table.getModel().getValueAt(row_index, col_index);
+    }
     private void hideColumnFromTable(JTable table, int columnIndex)
     {
         table.getColumnModel().getColumn(columnIndex).setMinWidth(0);
@@ -89,16 +64,15 @@ public class PLecciones extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        lessons_list = new javax.swing.JList<>();
         lblcurso_title = new java.awt.Label();
         Lecciones = new java.awt.Label();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabla_lecciones = new javax.swing.JTable();
+        Conceptos = new java.awt.Label();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabla_concepto = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jScrollPane1.setViewportView(lessons_list);
 
         lblcurso_title.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         lblcurso_title.setText("label1");
@@ -106,7 +80,7 @@ public class PLecciones extends javax.swing.JFrame {
         Lecciones.setFont(new java.awt.Font("Dialog", 3, 24)); // NOI18N
         Lecciones.setText("Lecciones");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabla_lecciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -117,7 +91,34 @@ public class PLecciones extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        tabla_lecciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabla_leccionesMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tabla_lecciones);
+
+        Conceptos.setFont(new java.awt.Font("Dialog", 3, 24)); // NOI18N
+        Conceptos.setText("Conceptos");
+
+        tabla_concepto.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null}
+            },
+            new String [] {
+                "Numero de Conceptop", "Nombre"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabla_concepto.setName(""); // NOI18N
+        jScrollPane1.setViewportView(tabla_concepto);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -126,34 +127,49 @@ public class PLecciones extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(422, 422, 422)
-                        .addComponent(lblcurso_title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Lecciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 525, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(37, 37, 37)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(107, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 545, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Lecciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(43, 43, 43)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Conceptos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 639, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(567, 567, 567)
+                        .addComponent(lblcurso_title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(29, 43, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addContainerGap()
                 .addComponent(lblcurso_title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
-                .addComponent(Lecciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(85, 85, 85))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(Conceptos, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(Lecciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(56, 56, 56))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tabla_leccionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_leccionesMouseClicked
+        // TODO add your handling code here:
+        int fila = tabla_lecciones.rowAtPoint(evt.getPoint());
+        int curso_id = Integer.parseInt(tabla_lecciones.getValueAt(fila, 0).toString());
+        
+        // update concepto table
+        DConcepto concepto = new DConcepto();
+        this.tabla_concepto.setModel(concepto.show_only_name(curso_id));
+        this.hideColumnFromTable(tabla_concepto,0);
+    }//GEN-LAST:event_tabla_leccionesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -191,11 +207,12 @@ public class PLecciones extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private java.awt.Label Conceptos;
     private java.awt.Label Lecciones;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private java.awt.Label lblcurso_title;
-    private javax.swing.JList<String> lessons_list;
+    private javax.swing.JTable tabla_concepto;
+    private javax.swing.JTable tabla_lecciones;
     // End of variables declaration//GEN-END:variables
 }

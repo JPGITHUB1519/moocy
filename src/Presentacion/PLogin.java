@@ -136,7 +136,7 @@ public class PLogin extends javax.swing.JFrame {
                     Session.user_id = usuario_rs.getInt("id");
                     Session.username = usuario_rs.getString("nombre");
                     Session.login = usuario_rs.getString("login");
-                    Session.user_type = usuario_rs.getString("tipo_usuario");
+                    Session.user_type = Integer.parseInt(usuario_rs.getString("tipo_usuario").toString());
                     
                 }
             } catch(Exception e) {

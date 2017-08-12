@@ -6,6 +6,7 @@
 package Presentacion;
 
 import Data.DCurso;
+import Utils.Session;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -48,7 +49,7 @@ class CourseButton extends JButton {
    
 }
 
-public class PMisCursos extends javax.swing.JFrame {
+public class PMisCursos extends javax.swing.JInternalFrame {
     
     private List<CourseButton> cursos_buttons;
     private int index;
@@ -62,7 +63,7 @@ public class PMisCursos extends javax.swing.JFrame {
         
         // for the cursos
         DCurso curso = new DCurso();
-        ResultSet rs = curso.getCursos();
+        ResultSet rs = curso.getCursosByUsuario(Session.user_id);
         int id;
         String nombre;
 
@@ -70,8 +71,8 @@ public class PMisCursos extends javax.swing.JFrame {
         {
           while(rs.next())
             {
-               id = Integer.parseInt(rs.getString(1));
-               nombre = rs.getString(2); 
+               id = Integer.parseInt(rs.getString(2));
+               nombre = rs.getString(4); 
                CourseButton boton = new CourseButton("boton" + index);
                boton.setId(id);
                boton.setNombre(nombre);
@@ -82,12 +83,14 @@ public class PMisCursos extends javax.swing.JFrame {
                //dispose();
 
             });
+               /*
                try {
                     Image img = ImageIO.read(getClass().getResource("/Files/cancel.png"));
                     boton.setIcon(new ImageIcon(img));
                 } catch (Exception ex) {
                     System.out.println(ex);
                 };
+               */
                panel.add(boton);
                cursos_buttons.add(boton);
                index++;
@@ -109,6 +112,7 @@ public class PMisCursos extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         panel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -117,6 +121,14 @@ public class PMisCursos extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("Mis Cursos");
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/cancel.png"))); // NOI18N
+        jButton1.setText("Salir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -131,11 +143,17 @@ public class PMisCursos extends javax.swing.JFrame {
                         .addGap(474, 474, 474)
                         .addComponent(jLabel1)))
                 .addContainerGap(69, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(21, 21, 21))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addGap(6, 6, 6)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -144,6 +162,11 @@ public class PMisCursos extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -181,6 +204,7 @@ public class PMisCursos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel panel;

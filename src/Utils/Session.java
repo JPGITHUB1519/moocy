@@ -12,6 +12,6 @@ package Utils;
 public final class Session {
     public static int user_id;
     public static String username;
-    public static String user_type;
+    public static int user_type;
     public static String login;
 }

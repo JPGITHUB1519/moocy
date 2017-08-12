@@ -18,11 +18,9 @@ public class PPrincipal extends javax.swing.JFrame {
      */
     public PPrincipal() {
         initComponents();
-        if(Session.user_id != 0) {
-            Cursos.
-                    System.out.println(Session.user_id + " " + Session.login);
-        } 
-        
+        if(Session.user_type != 0) {
+           menuMantenimiento.setVisible(false);
+        }      
     }
 
     /**
@@ -36,17 +34,20 @@ public class PPrincipal extends javax.swing.JFrame {
 
         desktopPane = new javax.swing.JDesktopPane();
         menuBar = new javax.swing.JMenuBar();
-        fileMenu = new javax.swing.JMenu();
+        menuMantenimiento = new javax.swing.JMenu();
         saveMenuItem = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
+        saveMenuItem2 = new javax.swing.JMenuItem();
         saveMenuItem1 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        exitMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        fileMenu.setIcon(new javax.swing.ImageIcon("C:\\Users\\Tester\\Desktop\\form.png")); // NOI18N
-        fileMenu.setMnemonic('f');
-        fileMenu.setText("Mantenimientos");
+        menuMantenimiento.setIcon(new javax.swing.ImageIcon("C:\\Users\\Tester\\Desktop\\form.png")); // NOI18N
+        menuMantenimiento.setMnemonic('f');
+        menuMantenimiento.setText("Mantenimientos");
 
         saveMenuItem.setIcon(new javax.swing.ImageIcon("C:\\Users\\Tester\\Desktop\\curso.png")); // NOI18N
         saveMenuItem.setMnemonic('s');
@@ -56,7 +57,7 @@ public class PPrincipal extends javax.swing.JFrame {
                 saveMenuItemActionPerformed(evt);
             }
         });
-        fileMenu.add(saveMenuItem);
+        menuMantenimiento.add(saveMenuItem);
 
         exitMenuItem.setIcon(new javax.swing.ImageIcon("C:\\Users\\Tester\\Desktop\\close_big.png")); // NOI18N
         exitMenuItem.setMnemonic('x');
@@ -66,12 +67,22 @@ public class PPrincipal extends javax.swing.JFrame {
                 exitMenuItemActionPerformed(evt);
             }
         });
-        fileMenu.add(exitMenuItem);
+        menuMantenimiento.add(exitMenuItem);
 
-        menuBar.add(fileMenu);
-        fileMenu.getAccessibleContext().setAccessibleName("MenuMantenimientos");
+        menuBar.add(menuMantenimiento);
+        menuMantenimiento.getAccessibleContext().setAccessibleName("MenuMantenimientos");
 
         jMenu1.setText("Cursos");
+
+        saveMenuItem2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Tester\\Desktop\\curso.png")); // NOI18N
+        saveMenuItem2.setMnemonic('s');
+        saveMenuItem2.setText("Mis Cursos");
+        saveMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(saveMenuItem2);
 
         saveMenuItem1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Tester\\Desktop\\curso.png")); // NOI18N
         saveMenuItem1.setMnemonic('s');
@@ -84,6 +95,20 @@ public class PPrincipal extends javax.swing.JFrame {
         jMenu1.add(saveMenuItem1);
 
         menuBar.add(jMenu1);
+
+        jMenu2.setText("Salir");
+
+        exitMenuItem1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Tester\\Desktop\\close_big.png")); // NOI18N
+        exitMenuItem1.setMnemonic('x');
+        exitMenuItem1.setText("Exit");
+        exitMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(exitMenuItem1);
+
+        menuBar.add(jMenu2);
 
         setJMenuBar(menuBar);
 
@@ -115,7 +140,25 @@ public class PPrincipal extends javax.swing.JFrame {
 
     private void saveMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItem1ActionPerformed
         // TODO add your handling code here:
+        FrmTakeNewCourse doform = new FrmTakeNewCourse();
+        desktopPane.add(doform);
+        doform.toFront();
+        doform.setVisible(true);
     }//GEN-LAST:event_saveMenuItem1ActionPerformed
+
+    private void saveMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        PMisCursos doform = new PMisCursos();
+        desktopPane.add(doform);
+        doform.toFront();
+        doform.setVisible(true);
+        
+    }//GEN-LAST:event_saveMenuItem2ActionPerformed
+
+    private void exitMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_exitMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -155,11 +198,14 @@ public class PPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenuItem exitMenuItem;
-    private javax.swing.JMenu fileMenu;
+    private javax.swing.JMenuItem exitMenuItem1;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenu menuMantenimiento;
     private javax.swing.JMenuItem saveMenuItem;
     private javax.swing.JMenuItem saveMenuItem1;
+    private javax.swing.JMenuItem saveMenuItem2;
     // End of variables declaration//GEN-END:variables
 
 }

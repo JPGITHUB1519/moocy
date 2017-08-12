@@ -6,16 +6,40 @@
 package Utils;
 
 import java.awt.Desktop;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  *
  * @author Tester
  */
 public class Browser {
-    public static void openWebpage(String urlString) {
+    
+    // append query to url
+    public static URI appendQueryToUrl(String uri, String appendQuery) throws URISyntaxException {
+        URI oldUri = new URI(uri);
+
+        String newQuery = oldUri.getQuery();
+        if (newQuery == null) {
+            newQuery = appendQuery;
+        } else {
+            newQuery += "&" + appendQuery;  
+        }
+
+        URI newUri = new URI(oldUri.getScheme(), oldUri.getAuthority(),
+                oldUri.getPath(), newQuery, oldUri.getFragment());
+
+        return newUri;
+    }
+    public static void openWebpage(String urlString, String query) {
         try {
-            Desktop.getDesktop().browse(new URL(urlString).toURI());
+            //URI url = new URL(urlString).toURI();
+            
+            URI url = appendQueryToUrl(urlString, query);
+            Desktop.getDesktop().browse(url);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

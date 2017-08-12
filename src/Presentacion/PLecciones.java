@@ -7,6 +7,7 @@ package Presentacion;
 
 import Data.DConcepto;
 import Data.DLeccion;
+import static Utils.Browser.openWebpage;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -24,6 +25,8 @@ import javax.swing.table.DefaultTableModel;
 public class PLecciones extends javax.swing.JFrame {
     
     private int curso_id;
+    
+    private String video_web_page_url = "http://localhost:8080/concept.html";
     /**
      * Creates new form PLecciones
      */
@@ -106,7 +109,7 @@ public class PLecciones extends javax.swing.JFrame {
                 {null, null}
             },
             new String [] {
-                "Numero de Conceptop", "Nombre"
+                "Numero de Concepto", "Nombre"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -118,6 +121,11 @@ public class PLecciones extends javax.swing.JFrame {
             }
         });
         tabla_concepto.setName(""); // NOI18N
+        tabla_concepto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabla_conceptoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabla_concepto);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -169,7 +177,19 @@ public class PLecciones extends javax.swing.JFrame {
         DConcepto concepto = new DConcepto();
         this.tabla_concepto.setModel(concepto.show_only_name(curso_id));
         this.hideColumnFromTable(tabla_concepto,0);
+        this.hideColumnFromTable(tabla_concepto, 3);
     }//GEN-LAST:event_tabla_leccionesMouseClicked
+
+    private void tabla_conceptoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_conceptoMouseClicked
+        // TODO add your handling code here:
+        // mimyc doble click
+        if(evt.getClickCount() == 2) {
+            int fila = tabla_concepto.rowAtPoint(evt.getPoint());      
+            String video_url = tabla_concepto.getValueAt(fila, 3).toString();
+            openWebpage(this.video_web_page_url, "video=" + video_url);
+        }
+        
+    }//GEN-LAST:event_tabla_conceptoMouseClicked
 
     /**
      * @param args the command line arguments

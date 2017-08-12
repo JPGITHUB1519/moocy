@@ -37,8 +37,8 @@ public class DConcepto {
     }
     
     public DefaultTableModel show_only_name(int leccion) {
-        String [] titulos = { "ID", "Numero de Concepto", "Nombre"};
-        String [] registro = new String[3];
+        String [] titulos = { "ID", "Numero de Concepto", "Nombre", "video_url"};
+        String [] registro = new String[4];
         totalregistros = 0;
         //modelo = new DefaultTableModel(null, titulos);
         DefaultTableModel modelo = new DefaultTableModel(null, titulos) {
@@ -55,6 +55,7 @@ public class DConcepto {
                 registro[0] = rs.getString("id");
                 registro[1] = "#"  + Integer.toString(cont);
                 registro[2] = rs.getString("nombre");
+                registro[3] = rs.getString("video_url");
                 modelo.addRow(registro);
                 cont++;
             }

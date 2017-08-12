@@ -30,7 +30,7 @@ public class Test {
     
     public static void main(String [] args) {
         
-       openWebpage("https://www.google.com.do/");
+       openWebpage("https://www.google.com.do/", "video=hola");
         
     }
 }
